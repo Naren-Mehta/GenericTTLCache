@@ -1,0 +1,137 @@
+body {
+    font-family: Verdana;
+    font-size: 13pt;
+}
+
+.page-container {
+    margin: 0 auto;
+    max-width: 1028px;
+    min-width: 400px;
+    background: #ffffff;
+}
+
+.header {
+    height: 80px;
+}
+
+.content-wrapper {
+    min-height: 400px;
+}
+
+.content-wrapper > .page-container {
+    padding-left: 30px;
+}
+
+.question-header, .question-row, .form-view .lead {
+    margin-bottom: 10px;
+}
+
+.form-view .lead {
+    font-size: 15pt;
+}
+
+.question-row p {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.question-row .radio, .question-row .checkbox, .question-row select {
+    margin-left: 20px;
+}
+
+.question-header {
+    margin-top: 10px;
+    font-size: 80%;
+}
+
+.radio-label-row label, .question-row .radio label, .question-row .checkbox label {
+    display: block;
+    font-size: 80%;
+    font-weight: normal;
+}
+
+input[type="radio"].radio-input {
+    margin: 0 10px;
+    padding: 3px;
+}
+
+.pad-10 {
+    padding: 20px 10%;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+img {
+    margin: 0 auto;
+}
+
+.special-list {
+    list-style-image: url('/images/questionTypes/liststyle.png');
+    padding-left: 25px;
+}
+
+.special-list li {
+    padding-left: 10px;
+}
+
+.height-250 {
+    height: 250px;
+}
+
+.width-60-center {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.width-50-center {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.w80-h70 {
+    width: 100px;
+    height: 90px;
+}
+
+.progress.vertical {
+    width: 60px;
+    margin-left: 20px;
+}
+
+.faceicon {
+    width: 100px;
+    height: 120px;
+    background: url('/images/questionTypes/faces.png') no-repeat transparent;
+    display: block;
+    margin: 10px auto;
+    margin-left: 10px;
+}
+
+.face-ok {
+    background-position: -171px -180px;
+}
+
+.face-love {
+    background-position: -320px -175px;
+}
+
+.face-hate {
+    background-position: -171px -550px;
+}
+
+.lscharts h4 {
+    height: 40px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 767px) {
+    .width-60-center {
+        width: 100%;
+    }
+
+    .faceicon {
+        margin-left: 30px;
+    }
+}

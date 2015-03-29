@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3213112680">
+    <data-source source="LOCAL" name="genericTTLCache dev" uuid="f4d30227-b773-4843-b00d-3df37d7f40f1">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost/genericTTLCache?useUnicode=yes&amp;characterEncoding=UTF-8</jdbc-url>
+      <libraries>
+        <library>
+          <url>file://$USER_HOME$/.grails/ivy-cache/mysql/mysql-connector-java/jars/mysql-connector-java-5.1.20.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
