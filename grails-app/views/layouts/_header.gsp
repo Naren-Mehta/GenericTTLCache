@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <g:link controller="home" action="landingPage" class="navbar-brand">Simulate</g:link>
+                <g:link controller="home" action="landingPage" class="navbar-brand">TTL Caches</g:link>
             </div>
 
             <div id="navbar" class="navbar-collapse collapse">

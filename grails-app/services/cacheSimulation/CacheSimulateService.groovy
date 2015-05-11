@@ -16,19 +16,19 @@ import utils.AppUtil
 import java.util.logging.Level
 import java.util.logging.Logger
 
-/**
- * Created by narendra on 26/2/15.
- */
+
 class CacheSimulateService {
 
     def simulateUtilService
     static Scanner scanner = null;
     static int EntriesAtATime = 100
-
+    static boolean back = false;
+    static Thread MainThread = Thread.currentThread();
     private static int LogFileUpdate = 0;
 
     public performLogic(CacheSimulation cacheSimulation, CommonsMultipartFile cacheFile, CommonsMultipartFile firstReadingFile) {
 
+        boolean quit = false;
         CacheManager Cm = null;
         String Sample_File = null;
         int InputFileRead = cacheSimulation?.checkNextSampleRate
@@ -39,9 +39,6 @@ class CacheSimulateService {
 
         try {
 
-            println("From Now ONWARDS ......");
-            println("type 'quit' or 'exit' to terminate the program. OR type 'back' to Go To Main Menu (AnyTIme) ");
-
 
             FileLogger.copytoLog("Cache File : " + cacheFile
                     + " -- Sample Data File :" + firstReadingFile
@@ -50,16 +47,9 @@ class CacheSimulateService {
                     + " -- Cache Replacing Policy : "
                     + (cacheSimulation?.replacingScheme == 1 ? "LRU" : "FIFO"));
 
-
-
-
             FileLogger
                     .copytoLog("\n\nTime\tTotal_Hits\tTotal_Miss\tEntries_in_Queue\t"
                     + "Entries_Expired_in_Queue\tTotal_Entries\n");
-
-
-            println("----------------------------after file logger---------------------")
-
 
 
             CacheSimulateDocuments cacheSimulateDocuments = CacheSimulateDocuments?.findByCacheSimulation(cacheSimulation)
@@ -69,22 +59,12 @@ class CacheSimulateService {
             String cacheName = cacheDocuments?.name
 
             def webRootDir = AppUtil.staticResourcesDirPath
-            String cacheFilename = webRootDir + "/uploadedFile/storeCacheFile/${cacheSimulation?.id}/" + cacheName
-            String firstReadingFileName = webRootDir + "/uploadedFile/firstReadingFile/${cacheSimulation?.id}/" + fileName
-
-            println("---------------i am hear---------------12------------" + cacheFilename)
-            println("---------------i am hear----------------11-----------" + firstReadingFileName)
-
-
-
+            String cacheFilename = webRootDir + "uploadedFile/storeCacheFile/${cacheSimulation?.id}/" + cacheName
+            String firstReadingFileName = webRootDir + "uploadedFile/firstReadingFile/${cacheSimulation?.id}/" + fileName
 
 
             Cm = CacheManager.GetCacheManagerInstance(cacheSimulation?.cacheSize as int,
                     cacheFilename, cacheSimulation?.cacheRefreshRate as int, LogFileUpdate as int, cacheSimulation?.replacingScheme as int);
-
-
-
-            println("----------------------------after cm---------------------")
 
 
             boolean end = false;
@@ -93,78 +73,84 @@ class CacheSimulateService {
 
             Sample_File = firstReadingFileName
 
-            println("------------1-----------------before while-------")
-
-            while (!end) {
-                start_Reading(Sample_File);
-                println("Reading data from File : " + Sample_File);
-                while (true) {
-                    println("------------2-----------------in while----true---")
-
-                    LinkedList LIST = getNorLessEntriesFromFile();
+//            while (!end) {
+            start_Reading(Sample_File);
+            println("Reading data from File : " + Sample_File);
+            while (true) {
+                LinkedList LIST = getNorLessEntriesFromFile();
 
 
-                    println("------------3-----------------in while----true---" + LIST)
+                if (LIST.size() == 0) {
+                    /*
+                     * while (LIST.size() == 0) { println(
+                     * "File seems Empty : Waiting for user to input data . Program will check the file after "
+                     * + InputFileRead + " Seconds .");
+                     * Thread.sleep(InputFileRead * 1000);
+                     * println("Reading data from File : " +
+                     * Sample_File); start_Reading(Sample_File); LIST =
+                     * getNorLessEntriesFromFile(); }
+                     */
 
-
-                    if (LIST.size() == 0) {
-                        /*
-                         * while (LIST.size() == 0) { println(
-                         * "File seems Empty : Waiting for user to input data . Program will check the file after "
-                         * + InputFileRead + " Seconds .");
-                         * Thread.sleep(InputFileRead * 1000);
-                         * println("Reading data from File : " +
-                         * Sample_File); start_Reading(Sample_File); LIST =
-                         * getNorLessEntriesFromFile(); }
-                         */
-
-                    }
-
-
-                    println("----------------------------------4-----------------------------")
-
-                    List list = Collections.synchronizedList(LIST);
-                    for (Object obj : list) {
-                        CachedObject entry = (CachedObject) obj;
-                        Cm.putEntry(entry);
-                        entries++;
-                    }
-                    println("----------------------------------5-----------------------------")
-
-                    if (list.size() < EntriesAtATime) {
-                        break;
-                    }
-                    println("----------------------------------6-----------------------------")
-
-                    // remove data from sample.txt
                 }
 
-                println("-----------------------1--------he he-------------------------")
 
-                println("\nFile Completely Read -> " + Sample_File);
-                println("***********************************************************************************");
+                List list = Collections.synchronizedList(LIST);
+                println("--------------list----------------" + list)
 
-                try {
-                    println("----------------------1-------------------------")
-                    Sample_File = getNextFileName(Sample_File);
-//                while (!FileExists(Sample_File)) {
-//                    println("Reading in Sequence . File not found ->  "
-//                            + Sample_File);
-//                    println("Program will check after " + InputFileRead
-//                            + " seconds");
-//                    Thread.sleep(InputFileRead * 1000);
-//                }
-//
-//                if (FileExists(Sample_File)) {
-//                    start_Reading(Sample_File);
-//                }
-                }
-                catch (Exception e) {
-                    println("---------------------file not found----------------")
+                for (Object obj : list) {
+                    CachedObject entry = (CachedObject) obj;
+
+                    println("----------entry-------------" + entry)
+                    println("----------entries-------------" + entries)
+
+                    Cm.putEntry(entry);
+                    entries++;
                 }
 
+                if (list.size() < EntriesAtATime) {
+                    break;
+                }
+                // remove data from sample.txt
             }
+
+            println("\nFile Completely Read -> " + Sample_File);
+            println("***********************************************************************************");
+
+//                try {
+//                    println("----------------------1-------------------------")
+//                    Sample_File = getNextFileName(Sample_File);
+//                    while (!FileExists(Sample_File)) {
+//                        println("Reading in Sequence . File not found ->  "
+//                                + Sample_File);
+//                        println("Program will check after " + InputFileRead
+//                                + " seconds");
+//                        Thread.sleep(InputFileRead * 1000);
+//
+//                        break;
+//                    }
+//                    println("----------------------2-------------------------")
+//
+//                    if (Sample_File) {
+//                        println("----------------------2-.1------------------------")
+//
+//                        start_Reading(Sample_File);
+//                    }
+//                    println("----------------------3-------------------------")
+//
+//                }
+//                catch (Exception e) {
+//                    println("---------------------file not found----------------")
+//                }
+            println("----------------------4-------------------------")
+
+//            }
+
+
+            println("----------------------5-------------------------")
+
             FileLogger.closeLogHandle();
+            println("----------------------6-------------------------")
+
         }
 
         catch (InterruptedException ex) {
@@ -185,6 +171,11 @@ class CacheSimulateService {
         } catch (quitException ex) {
 //            break;
         }
+
+
+
+
+        return true
     }
 
     static void start_Reading(String _fFile) throws FileNotFoundException {
@@ -220,9 +211,6 @@ class CacheSimulateService {
             // this only has any effect if the item passed to the Scanner
             // constructor implements Closeable (which it does in this case).
         }
-
-        println("----------------------return list--------------------" + list)
-
         return list;
 
     }

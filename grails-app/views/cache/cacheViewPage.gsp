@@ -15,7 +15,12 @@
                         enctype="multipart/form-data" method="POST">
 
                     <div class="form-group text-left">
-                        <h2>Welcome to the Generic TTL Cache</h2>
+                        <h2>Generic TTL Cache Parameters</h2>
+
+                        <g:render template="/common/aboutUserDetails"/>
+                        <a href="#" role="button" class="btn btn-info"
+                           data-target="#aboutUserDetails"
+                           data-toggle="modal">About</a>
                     </div>
 
 
@@ -40,30 +45,30 @@
                     </div>
 
                     <div class="form-group">
-                        <p class="h4">Enter the name/path of Cache file ( e.g. cache.txt )</p>
+                        <p class="h4">Enter Path of Cache file (e.g. C:\cache.txt)</p>
                         <input type="file" name="cacheFile">
 
                     </div>
 
                     <div class="form-group">
-                        <p class="h4">Enter the size ( number of entries ) of the Cache
+                        <p class="h4">Enter the size (number of entries) of the Cache
                         </p>
 
                         <g:select name="cacheSize" class="form-control" from="${["16", "32", "64", "128", "256"]}"
-                                  noSelection="['': '-select cache type-']" value="${simulateCO?.cacheSize}"/>
+                                  noSelection="['': '-select Cache Size-']" value="${simulateCO?.cacheSize}"/>
                     </div>
 
                     <div class="form-group">
-                        <p class="h4">How Often do you want to update CacheFile ( Cache Refresh Rate - Seconds )</p>
+                        <p class="h4">Cache Update rate (Refresh Rate - Seconds)</p>
 
                         <g:select name="cacheRefreshRate" class="form-control"
                                   from="${["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}"
-                                  noSelection="['': '-select cache Refresh Rate-']"
+                                  noSelection="['': '-select Cache Refresh Rate-']"
                                   value="${simulateCO?.cacheRefreshRate}"/>
                     </div>
 
                     <div class="form-group">
-                        <p class="h4">Enter the first file from which program will start reading data (e.g. sample1.txt )
+                        <p class="h4">Enter Path of sample (IP log) file (e.g. C:\sample.txt)
                         </p>
 
                         <input type="file" name='userFiles[]' multiple>
@@ -71,38 +76,36 @@
                     </div>
 
                     <div class="form-group">
-                        <p class="h4">How Often do you want to check next Sample file in the sequence ( seconds )</p>
+                        <p class="h4">Sample (IP log) file Update rate (Refresh Rate - Seconds). </p>
 
                         <g:select name="checkNextSampleRate" class="form-control"
                                   from="${["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}"
-                                  noSelection="['': '-select Replacement policy-']"
+                                  noSelection="['': '-select Cache Replacement Policy-']"
                                   value="${simulateCO?.checkNextSampleRate}"/>
                     </div>
 
                     <div class="form-group">
-                        <p class="h4">Number of entries to read from Sample file AT A TIME</p>
-
+                        <p class="h4">Number of entries to read from sample file</p>
 
                         <g:select name="numberOfEntries" class="form-control"
-                                  noSelection="['': '-select number Of Entries -']"
+                                  noSelection="['': '-select Batch size -']"
                                   value="${simulateCO?.numberOfEntries}"
                                   from="${["100", "500", "1000", "1500", "2000", "2500", "3000", "3500", "4000", "4500", "5000"]}"/>
 
                     </div>
 
                     <div class="form-group">
-                        <p class="h4">How Often do you want update LOG FILE ( seconds )</p>
-
+                        <p class="h4">Log file Update rate (Seconds)</p>
 
                         <g:select name="updateLOGFILERate" class="form-control"
-                                  noSelection="['': '-select update LOG FILE Rate -']"
+                                  noSelection="['': '-select LOG FILE refresh rate -']"
                                   value="${simulateCO?.updateLOGFILERate}"
                                   from="${["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}"/>
 
                     </div>
 
                     <div class="form-group">
-                        <p class="h4">Enter Replacing Sceheme . 1 for LRU and 2 for FIFO</p>
+                        <p class="h4">Cache Replacement Schemes: 0 for LRU and 1 for FIFO</p>
 
 
                         <g:select name="replacingScheme" class="form-control"

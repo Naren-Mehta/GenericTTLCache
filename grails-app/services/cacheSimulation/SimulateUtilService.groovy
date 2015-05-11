@@ -6,9 +6,6 @@ import genericTTLCache.CacheSimulation
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import utils.AppUtil
 
-/**
- * Created by narendra on 27/2/15.
- */
 class SimulateUtilService {
 
     public void storeCacheFile(CommonsMultipartFile uploadedFile, CacheSimulation cacheSimulation) {

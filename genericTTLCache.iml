@@ -50,6 +50,7 @@
           <root url="file://$MODULE_DIR$/lib" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.liquibase/liquibase-core/jars/liquibase-core-2.0.5.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/mysql/mysql-connector-java/jars/mysql-connector-java-5.1.20.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/net.sourceforge.jexcelapi/jxl/jars/jxl-2.6.12.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -59,4 +60,3 @@
     <orderEntry type="module" module-name="genericTTLCache-grailsPlugins" />
   </component>
 </module>
-

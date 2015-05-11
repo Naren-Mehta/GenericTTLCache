@@ -10,12 +10,12 @@ class CacheSimulation {
     Long replacingScheme
 
     static constraints = {
-        cacheRefreshRate(blank: false, nullable: false)
-        checkNextSampleRate(blank: false, nullable: false)
-        cacheSize(blank: false, nullable: false)
-        numberOfEntries(blank: false, nullable: false)
-        updateLOGFILERate(blank: false, nullable: false)
-        replacingScheme(blank: false, nullable: false)
+        cacheRefreshRate(blank: true, nullable: true)
+        checkNextSampleRate(blank: true, nullable: true)
+        cacheSize(blank: true, nullable: true)
+        numberOfEntries(blank: true, nullable: true)
+        updateLOGFILERate(blank: true, nullable: true)
+        replacingScheme(blank: true, nullable: true)
     }
 
 }
